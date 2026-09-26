@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+    El mismo caso en dos navegadores. Cada <test> recibe su navegador como
+    parametro y los dos corren en paralelo (parallel="tests").
+-->
+<suite name="Proyecto Final - OrangeHRM" parallel="tests" thread-count="2">
+
+    <test name="Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="employees.AddEmployeeTests"/>
+        </classes>
+    </test>
+
+    <test name="Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="employees.AddEmployeeTests"/>
+        </classes>
+    </test>
+
+</suite>

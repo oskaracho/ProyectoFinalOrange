@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Juan",
+    "middleName": "David",
+    "lastName": "Lopez",
+    "usernameBase": "jlopez",
+    "password": "ProyFinal2026",
+    "status": "Enabled"
+  },
+  {
+    "firstName": "Maria",
+    "middleName": "Alexandra",
+    "lastName": "Quintanilla",
+    "usernameBase": "mquintanilla",
+    "password": "ProyFinal2026",
+    "status": "Disabled"
+  },
+  {
+    "firstName": "Sergio",
+    "middleName": "Juan",
+    "lastName": "Ticona",
+    "usernameBase": "sticona",
+    "password": "ProyFinal2026",
+    "status": "Enabled"
+  }
+]
