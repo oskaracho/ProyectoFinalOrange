@@ -6,10 +6,8 @@ import org.openqa.selenium.WebDriver;
 public class EmployeeListPage extends BasePage {
     private By header = By.xpath("//h5[normalize-space()='Employee Information']");
     private By addButton = By.xpath("//button[normalize-space()='Add']");
-
     private By employeeIdFilterInput = By.xpath("//label[text()='Employee Id']/../following-sibling::div/input");
     private By searchButton = By.xpath("//button[normalize-space()='Search']");
-
 
     public EmployeeListPage(WebDriver webDriver) {
         super(webDriver);

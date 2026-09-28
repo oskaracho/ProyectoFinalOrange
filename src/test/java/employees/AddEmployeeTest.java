@@ -16,7 +16,7 @@ import pages.LoginPage;
 
 import java.util.UUID;
 
-public class AddEmployeeTest extends BaseTest {
+public class    AddEmployeeTest extends BaseTest {
 
     @DataProvider(name = "employeeDataProvider")
     public Object[][] employeeData() {
