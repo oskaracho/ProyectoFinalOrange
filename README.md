@@ -53,3 +53,37 @@ pantalla del momento de la falla.
 
 El demo es compartido y no acepta IDs ni usuarios repetidos: sin el código,
 la segunda corrida ya fallaría.
+
+
+## Punto 4: búsqueda del empleado en el listado
+
+Después de guardar, la prueba vuelve al listado de empleados y busca al empleado recién creado por su Employee Id.
+
+| Archivo | Qué se agregó |
+|---|---|
+| `EmployeeDetailsPage` | Locator `pimMenuItem` y método `goToEmployeeList()`: hace clic en PIM y entrega el control a `EmployeeListPage`. |
+| `EmployeeListPage` | Locators `employeeIdFilterInput` y `searchButton`, y método `searchByEmployeeId(employeeId)`: escribe el ID en el filtro y hace clic en Search. |
+| `AddEmployeeTest` | Llama a `goToEmployeeList()` y a `searchByEmployeeId(employeeId)`. No contiene locators. |
+
+Se busca por ID porque es único en cada corrida (lleva el código aleatorio), así que la grilla devuelve solo el empleado recién creado.
+
+## Carga de foto del empleado (opcional)
+
+La foto está fuera del alcance del enunciado y se agregó como extra.
+
+| Archivo | Qué se agregó |
+|---|---|
+| `resources/testdata/employees/foto.jpg` | Imagen que se sube al crear el empleado. |
+| `AddEmployeePage` | Locator `photoInput` y método `uploadPhoto(photoPath)`. |
+| `AddEmployeeTest` | Llamada a `uploadPhoto(...)` después de ingresar el nombre. |
+
+No se hace clic en el botón **+**, porque abriría el explorador de archivos del sistema, que Selenium no controla. Se envía la ruta de la imagen directo al campo de archivo oculto.
+
+## Punto 5: verificación en la grilla de resultados
+
+| Archivo | Qué se agregó |
+|---|---|
+| `EmployeeListPage` | Locator `resultCellWithId(employeeId)` y método `isEmployeeInResults(employeeId)`, que devuelve `true` o `false`. |
+| `AddEmployeeTest` | `Assert.assertTrue(...)` con ese resultado y una captura de la grilla para el reporte. |
+
+La aserción está en la prueba y no en la página, como pide el enunciado. Si la fila con el ID aparece, la prueba pasa. Si no aparece en 20 segundos, falla con un mensaje en el reporte.
