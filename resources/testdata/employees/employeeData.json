@@ -5,7 +5,8 @@
     "lastName": "Lopez",
     "usernameBase": "jlopez",
     "password": "ProyFinal2026",
-    "status": "Enabled"
+    "status": "Enabled",
+    "imageName": "user1.png"
   },
   {
     "firstName": "Maria",
@@ -13,7 +14,8 @@
     "lastName": "Quintanilla",
     "usernameBase": "mquintanilla",
     "password": "ProyFinal2026",
-    "status": "Disabled"
+    "status": "Disabled",
+    "imageName": "user2.png"
   },
   {
     "firstName": "Sergio",
@@ -21,7 +23,8 @@
     "lastName": "Ticona",
     "usernameBase": "sticona",
     "password": "ProyFinal2026",
-    "status": "Enabled"
+    "status": "Enabled",
+    "imageName": "user3.png"
   },
   {
     "firstName": "David",
@@ -29,6 +32,7 @@
     "lastName": "Garcia",
     "usernameBase": "dsoliz",
     "password": "ProyFinal2026",
-    "status": "Enabled"
+    "status": "Enabled",
+    "imageName": "user4.png"
   }
 ]

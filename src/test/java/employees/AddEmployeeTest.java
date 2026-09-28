@@ -33,6 +33,7 @@ public class AddEmployeeTest extends BaseTest {
         String username = employee.getUsernameBase() + "." + codigo;
         String password = employee.getPassword();
         String status = employee.getStatus();
+        String imageEmployee = employee.getImageName();
 ////////
 
         LoginPage loginPage = new LoginPage(webDriver);
@@ -50,6 +51,7 @@ public class AddEmployeeTest extends BaseTest {
         alta.enableLoginDetails();
         alta.enterLoginDetails(username, password, status);
         ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Datos del empleado y del usuario " + username + " cargados");
+        alta.addImageEmployee(imageEmployee);
         EmployeeDetailsPage ficha = alta.save();
         //////
         Assert.assertTrue(ficha.isEmployeeDetailsDisplayed(), "Al guardar deberia abrirse la info del empleado");

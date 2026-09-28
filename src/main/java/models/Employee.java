@@ -8,16 +8,38 @@ public class Employee {
     private String usernameBase;
     private String password;
     private String status;
+    private String imageName;
 
-    public String getFirstName(){ return firstName; }
-    public String getMiddleName(){ return middleName; }
-    public String getLastName(){ return lastName; }
-    public String getUsernameBase(){ return usernameBase; }
-    public String getPassword(){ return password; }
-    public String getStatus(){ return status; }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getUsernameBase() {
+        return usernameBase;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         return firstName + " " + middleName + " " + lastName;
     }
 }

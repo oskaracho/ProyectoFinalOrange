@@ -5,6 +5,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+
 public class AddEmployeePage extends BasePage {
     private By header = By.xpath("//h6[normalize-space()='Add Employee']");
     private By firstNameInput = By.name("firstName");
@@ -16,6 +19,8 @@ public class AddEmployeePage extends BasePage {
     private By passwordInput = By.xpath("//label[text()='Password']/../following-sibling::div/input");
     private By confirmPasswordInput = By.xpath("//label[text()='Confirm Password']/../following-sibling::div/input");
     private By saveButton = By.xpath("//button[normalize-space()='Save']");
+
+    private By employeeImageUpload = By.cssSelector("input[type='file']");
 
     private By statusOption(String status){
         return By.xpath("//label[normalize-space()='" + status + "']");
@@ -59,5 +64,21 @@ public class AddEmployeePage extends BasePage {
 
     public boolean isAddEmployeePageDisplayed(){
         return isVisible(header);
+    }
+
+    public void addImageEmployee(String imageName )   {
+        try {
+            String pathFile = "test-data/%s".formatted(imageName);
+            String imagePath = Paths.get(
+                    getClass()
+                            .getClassLoader()
+                            .getResource(pathFile)
+                            .toURI()
+            ).toString();
+            webDriver.findElement(employeeImageUpload).sendKeys(imagePath);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
     }
 }
