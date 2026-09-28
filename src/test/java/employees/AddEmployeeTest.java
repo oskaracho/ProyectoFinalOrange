@@ -16,16 +16,15 @@ import pages.LoginPage;
 
 import java.util.UUID;
 
-public class AddEmployeeTests extends BaseTest {
+public class AddEmployeeTest extends BaseTest {
 
-    @DataProvider(name = "employeeData")
-    public Object[][] employeeData(){
+    @DataProvider(name = "employeeDataProvider")
+    public Object[][] employeeData() {
         return JsonTestDataHelper.getTestData("resources/testdata/employees/employeeData.json", Employee[].class);
     }
 
-    @Test(description = "Crear un empleado nuevo",
-            dataProvider = "employeeData")
-    public void testAdminCreatesEmployeeWithLoginDetails(Employee employee){
+    @Test(description = "Crear un empleado nuevo", dataProvider = "employeeDataProvider")
+    public void testAdminCreatesEmployeeWithLoginDetails(Employee employee) {
         String codigo = UUID.randomUUID().toString().substring(0, 8);
         String firstName = employee.getFirstName();
         String middleName = employee.getMiddleName();
@@ -50,13 +49,16 @@ public class AddEmployeeTests extends BaseTest {
         alta.enterEmployeeId(employeeId);
         alta.enableLoginDetails();
         alta.enterLoginDetails(username, password, status);
-        ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO,
-                "Datos del empleado y del usuario " + username + " cargados");
+        ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Datos del empleado y del usuario " + username + " cargados");
         EmployeeDetailsPage ficha = alta.save();
         //////
         Assert.assertTrue(ficha.isEmployeeDetailsDisplayed(), "Al guardar deberia abrirse la info del empleado");
         Assert.assertEquals(ficha.getEmployeeName(), firstName + " " + lastName);
-        ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO,
-                "Empleado " + firstName + " " + lastName + " guardado");
+        ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Empleado " + firstName + " " + lastName + " guardado");
+
+        EmployeeListPage listadoFinal = ficha.goToEmployeeList();
+        listadoFinal.searchByEmployeeId(employeeId);
+        Assert.assertTrue(listadoFinal.isEmployeeInResults(employeeId), "El empleado " + employeeId + " deberia aparecer en la grilla de resultados");
+        ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Empleado " + employeeId + " encontrado en el listado");
     }
 }

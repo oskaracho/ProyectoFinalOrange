@@ -22,5 +22,13 @@
     "usernameBase": "sticona",
     "password": "ProyFinal2026",
     "status": "Enabled"
+  },
+  {
+    "firstName": "David",
+    "middleName": "Soliz",
+    "lastName": "Garcia",
+    "usernameBase": "dsoliz",
+    "password": "ProyFinal2026",
+    "status": "Enabled"
   }
 ]
