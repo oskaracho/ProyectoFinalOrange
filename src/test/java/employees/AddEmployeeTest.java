@@ -13,10 +13,9 @@ import pages.DashboardPage;
 import pages.EmployeeDetailsPage;
 import pages.EmployeeListPage;
 import pages.LoginPage;
-
 import java.util.UUID;
 
-public class    AddEmployeeTest extends BaseTest {
+public class AddEmployeeTest extends BaseTest {
 
     @DataProvider(name = "employeeDataProvider")
     public Object[][] employeeData() {
@@ -61,6 +60,7 @@ public class    AddEmployeeTest extends BaseTest {
         EmployeeListPage listadoFinal = ficha.goToEmployeeList();
         listadoFinal.searchByEmployeeId(employeeId);
         Assert.assertTrue(listadoFinal.isEmployeeInResults(employeeId), "El empleado " + employeeId + " deberia aparecer en la grilla de resultados");
+        Assert.assertEquals(listadoFinal.getFirstResultLastName(), lastName, "El apellido en la grilla no coincide con el cargado");
         ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Empleado " + employeeId + " encontrado en el listado");
     }
 }

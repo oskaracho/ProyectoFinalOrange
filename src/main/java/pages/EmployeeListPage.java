@@ -8,6 +8,7 @@ public class EmployeeListPage extends BasePage {
     private By addButton = By.xpath("//button[normalize-space()='Add']");
     private By employeeIdFilterInput = By.xpath("//label[text()='Employee Id']/../following-sibling::div/input");
     private By searchButton = By.xpath("//button[normalize-space()='Search']");
+    private By firstRowCells = By.cssSelector("div.oxd-table-body div.oxd-table-card:first-child div.oxd-table-cell");
 
     public EmployeeListPage(WebDriver webDriver) {
         super(webDriver);
@@ -21,6 +22,11 @@ public class EmployeeListPage extends BasePage {
 
     public boolean isEmployeeInResults(String employeeId) {
         return isVisible(resultCellWithId(employeeId));
+    }
+
+    public String getFirstResultLastName() {
+        waitForVisibility(firstRowCells);
+        return webDriver.findElements(firstRowCells).get(3).getText().trim();
     }
 
     public AddEmployeePage clickAdd() {
