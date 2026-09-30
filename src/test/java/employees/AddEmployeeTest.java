@@ -55,6 +55,8 @@ public class AddEmployeeTest extends BaseTest {
         //////
         Assert.assertTrue(ficha.isEmployeeDetailsDisplayed(), "Al guardar deberia abrirse la info del empleado");
         Assert.assertEquals(ficha.getEmployeeName(), firstName + " " + lastName);
+        // NUEVO 1: validar que la foto cargo
+        Assert.assertTrue(ficha.isEmployeePhotoLoaded(), "La foto del empleado deberia haberse cargado");
         ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Empleado " + firstName + " " + lastName + " guardado");
 
         EmployeeListPage listadoFinal = ficha.goToEmployeeList();
@@ -62,5 +64,16 @@ public class AddEmployeeTest extends BaseTest {
         Assert.assertTrue(listadoFinal.isEmployeeInResults(employeeId), "El empleado " + employeeId + " deberia aparecer en la grilla de resultados");
         Assert.assertEquals(listadoFinal.getFirstResultLastName(), lastName, "El apellido en la grilla no coincide con el cargado");
         ScreenShotHelper.takeScreenShotAndAdToHTMLReport(webDriver, Status.INFO, "Empleado " + employeeId + " encontrado en el listado");
+    }
+
+    // NUEVO 2: caso negativo con un archivo que no es imagen
+    @Test(description = "Subir un archivo que no es imagen muestra error")
+    public void testUploadInvalidFileShowsError() {
+        AddEmployeePage alta = new LoginPage(webDriver)
+                .loginAs(adminUsername, adminPassword)
+                .goToPim()
+                .clickAdd();
+        alta.addImageEmployee("archivo-invalido.txt");
+        Assert.assertEquals(alta.getImageError(), "File type not allowed");
     }
 }

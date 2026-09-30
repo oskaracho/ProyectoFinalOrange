@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -21,16 +22,17 @@ public class AddEmployeePage extends BasePage {
     private By saveButton = By.xpath("//button[normalize-space()='Save']");
 
     private By employeeImageUpload = By.cssSelector("input[type='file']");
+    private By imageError = By.cssSelector(".oxd-input-field-error-message");
 
-    private By statusOption(String status){
+    private By statusOption(String status) {
         return By.xpath("//label[normalize-space()='" + status + "']");
     }
 
-    public AddEmployeePage(WebDriver webDriver){
+    public AddEmployeePage(WebDriver webDriver) {
         super(webDriver);
     }
 
-    public void enterFullName(String firstName, String middleName, String lastName){
+    public void enterFullName(String firstName, String middleName, String lastName) {
         waitForVisibility(header);
         logger.info("Nombre completo: {} {} {}", firstName, middleName, lastName);
         type(firstNameInput, firstName);
@@ -38,7 +40,7 @@ public class AddEmployeePage extends BasePage {
         type(lastNameInput, lastName);
     }
 
-    public void enterEmployeeId(String employeeId){
+    public void enterEmployeeId(String employeeId) {
         waitForVisibility(employeeIdInput);
         WebElement campo = webDriver.findElement(employeeIdInput);
         while (!campo.getDomProperty("value").isEmpty()) {
@@ -47,11 +49,11 @@ public class AddEmployeePage extends BasePage {
         campo.sendKeys(employeeId);
     }
 
-    public void enableLoginDetails(){
+    public void enableLoginDetails() {
         clickAndWaitFor(loginDetailsSwitch, usernameInput);
     }
 
-    public void enterLoginDetails(String username, String password, String status){
+    public void enterLoginDetails(String username, String password, String status) {
         logger.info("Credenciales del usuario {} con estado {}", username, status);
         type(usernameInput, username);
         click(statusOption(status));
@@ -59,29 +61,36 @@ public class AddEmployeePage extends BasePage {
         type(confirmPasswordInput, password);
     }
 
-    public EmployeeDetailsPage save(){
+    public EmployeeDetailsPage save() {
         logger.info("Guardando empleado");
         click(saveButton);
         return new EmployeeDetailsPage(webDriver);
     }
 
-    public boolean isAddEmployeePageDisplayed(){
+    public boolean isAddEmployeePageDisplayed() {
         return isVisible(header);
     }
 
-    public void addImageEmployee(String imageName )   {
+    public void addImageEmployee(String imageName) {
         try {
             logger.info("Subiendo imagen {}", imageName);
             String pathFile = "test-data/%s".formatted(imageName);
-            String imagePath = Paths.get(
-                    getClass()
-                            .getClassLoader()
-                            .getResource(pathFile)
-                            .toURI()
-            ).toString();
+            var resource = getClass().getClassLoader().getResource(pathFile);
+            if (resource == null) {
+                throw new IllegalArgumentException("No existe el archivo de prueba: " + pathFile);
+            }
+            String imagePath = Paths.get(resource.toURI()).toString();
+            waitForVisibility(header);
+            waitForLoadersToFinish();
+            wait.until(ExpectedConditions.presenceOfElementLocated(employeeImageUpload));
             webDriver.findElement(employeeImageUpload).sendKeys(imagePath);
         } catch (URISyntaxException e) {
             logger.error("Ruta de imagen invalida", e);
         }
+    }
+
+    public String getImageError() {
+        waitForVisibility(imageError);
+        return webDriver.findElement(imageError).getText();
     }
 }
