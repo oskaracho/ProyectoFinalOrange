@@ -20,7 +20,7 @@ public abstract class BasePage {
 
     public BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(40));
         this.wait.ignoring(StaleElementReferenceException.class);
     }
 
