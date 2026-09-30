@@ -36,7 +36,7 @@ public abstract class BaseTest {
         if (iTestResult.getParameters().length > 0) {
             nombre = nombre + " - " + iTestResult.getParameters()[0];
         }
-        ReportManager.getInstance().startTest(nombre + " (" + browser + ")");
+        ReportManager.getInstance().startTest(nombre + " (" + browser + ")").assignCategory(browser);
 
         switch (browser){
             case "chrome":
