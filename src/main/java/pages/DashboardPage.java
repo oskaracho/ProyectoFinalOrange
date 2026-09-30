@@ -13,6 +13,7 @@ public class DashboardPage extends BasePage {
 
     public EmployeeListPage goToPim(){
         waitForVisibility(header);
+        logger.info("Navegando al modulo PIM");
         click(pimMenuItem);
         return new EmployeeListPage(webDriver);
     }

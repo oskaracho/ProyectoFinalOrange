@@ -26,6 +26,7 @@ public class LoginPage extends BasePage {
     }
 
     public DashboardPage loginAs(String user, String passWord){
+        logger.info("Login con el usuario {}", user);
         typeUserName(user);
         typePassWord(passWord);
         return clickOnLoginButton();

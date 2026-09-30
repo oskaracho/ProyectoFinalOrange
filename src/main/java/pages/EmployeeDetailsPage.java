@@ -18,7 +18,9 @@ public class EmployeeDetailsPage extends BasePage {
 
     public String getEmployeeName(){
         wait.until(driver -> !driver.findElement(employeeNameHeader).getText().isEmpty());
-        return webDriver.findElement(employeeNameHeader).getText();
+        String name = webDriver.findElement(employeeNameHeader).getText();
+        logger.info("Nombre en la ficha: {}", name);
+        return name;
     }
 
     public boolean isEmployeeDetailsDisplayed(){

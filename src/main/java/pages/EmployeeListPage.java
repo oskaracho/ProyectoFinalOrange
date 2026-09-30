@@ -16,6 +16,7 @@ public class EmployeeListPage extends BasePage {
 
     public void searchByEmployeeId(String employeeId) {
         waitForVisibility(header);
+        logger.info("Buscando empleado con Id {}", employeeId);
         type(employeeIdFilterInput, employeeId);
         click(searchButton);
     }

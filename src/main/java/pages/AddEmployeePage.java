@@ -32,6 +32,7 @@ public class AddEmployeePage extends BasePage {
 
     public void enterFullName(String firstName, String middleName, String lastName){
         waitForVisibility(header);
+        logger.info("Nombre completo: {} {} {}", firstName, middleName, lastName);
         type(firstNameInput, firstName);
         type(middleNameInput, middleName);
         type(lastNameInput, lastName);
@@ -51,6 +52,7 @@ public class AddEmployeePage extends BasePage {
     }
 
     public void enterLoginDetails(String username, String password, String status){
+        logger.info("Credenciales del usuario {} con estado {}", username, status);
         type(usernameInput, username);
         click(statusOption(status));
         type(passwordInput, password);
@@ -58,6 +60,7 @@ public class AddEmployeePage extends BasePage {
     }
 
     public EmployeeDetailsPage save(){
+        logger.info("Guardando empleado");
         click(saveButton);
         return new EmployeeDetailsPage(webDriver);
     }
@@ -68,6 +71,7 @@ public class AddEmployeePage extends BasePage {
 
     public void addImageEmployee(String imageName )   {
         try {
+            logger.info("Subiendo imagen {}", imageName);
             String pathFile = "test-data/%s".formatted(imageName);
             String imagePath = Paths.get(
                     getClass()
@@ -77,8 +81,7 @@ public class AddEmployeePage extends BasePage {
             ).toString();
             webDriver.findElement(employeeImageUpload).sendKeys(imagePath);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            logger.error("Ruta de imagen invalida", e);
         }
-
     }
 }
