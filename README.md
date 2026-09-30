@@ -87,3 +87,38 @@ No se hace clic en el botón **+**, porque abriría el explorador de archivos de
 | `AddEmployeeTest` | `Assert.assertTrue(...)` con ese resultado y una captura de la grilla para el reporte. |
 
 La aserción está en la prueba y no en la página, como pide el enunciado. Si la fila con el ID aparece, la prueba pasa. Si no aparece en 20 segundos, falla con un mensaje en el reporte.
+
+## Mejoras incorporadas
+
+### 1. Búsqueda del empleado en el listado
+Después de guardar, el test va a PIM, busca al empleado por su Employee Id y valida en la grilla que aparezca y que el apellido coincida con el cargado.
+
+### 2. Logs con Log4j2
+- Cada Page hereda un `logger` desde `BasePage` y registra sus acciones (login, navegación, carga de datos, subida de imagen, guardado).
+- Configuración en `src/test/resources/log4j2.xml`.
+- Los logs salen por consola y se guardan en `logs/execution.log`. La carpeta `logs/` está en el `.gitignore`.
+
+### 3. Ejecución en paralelo en Chrome y Firefox
+- `testEnd.xml` define un `<test>` por navegador con `parallel="tests"` y `thread-count="2"`.
+- El navegador se recibe como parámetro `browser` en `BaseTest`.
+- El reporte de Extent muestra los tests de ambos navegadores y permite filtrar por categoría (`chrome` / `firefox`).
+
+### 4. Validación de la foto del empleado
+- **Caso positivo:** después de guardar, `isEmployeePhotoLoaded()` comprueba que la imagen se dibujó correctamente (`naturalWidth > 0`).
+- **Caso negativo:** al subir un archivo que no es imagen (`archivo-invalido.txt`), se verifica el mensaje de error.
+- Las imágenes de prueba están en `src/test/resources/test-data`.
+
+## Cómo ejecutar
+
+```bash
+mvn clean test
+```
+
+Ejecuta la suite definida en `testEnd.xml` (Chrome y Firefox en paralelo).
+
+## Dónde ver los resultados
+- **Reporte HTML:** carpeta `target/reports`, abrir el archivo `.html` en el navegador.
+- **Logs:** `logs/execution.log`.
+
+## Cobertura actual
+10 ejecuciones en total: 4 empleados del JSON más el caso negativo de archivo inválido, cada uno en 2 navegadores.
